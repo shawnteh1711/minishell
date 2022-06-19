@@ -15,4 +15,15 @@ then I (Shawn) will:
 1. git checkout development   ---   This moves me to my local development branch.
 2. git pull <your_repo_name>   ---   This pulls any changes from your github repo development branch to my local repo. 
 
+
+<!-- $ cd PROJECT_NAME
+$ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+$ git fetch upstream
+
+# then: (like "git pull" which is fetch + merge)
+$ git merge upstream/master master
+
+# or, better, replay your local work on top of the fetched branch
+# like a "git pull --rebase"
+$ git rebase upstream/master -->
 ![github flow](images/github.png)
