@@ -9,10 +9,13 @@ create a mini shell program that mimic actual bash terminal
 # Tips for setting up
 1. include -lreadline to include readline library
 2. brew info readline to check if readline install in mac.
-3. from the brew info look for export and include it into c
+3. from the brew info look for export and include it into compilation
 
   export LDFLAGS="-L/usr/local/opt/readline/lib"
   export CPPFLAGS="-I/usr/local/opt/readline/include"
+
+For example:
+gcc rl_on_new_line.c -o rl_on_new_line -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
 # Function
 readline

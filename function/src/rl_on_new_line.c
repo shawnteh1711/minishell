@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:25:10 by steh              #+#    #+#             */
-/*   Updated: 2022/06/19 12:34:16 by steh             ###   ########.fr       */
+/*   Updated: 2022/06/19 12:55:45 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
 		// if (signal(SIGINT, handle_signals) == SIG_ERR)
 		// 	printf("failed to register intersuprs with kernal");
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	return (0);
