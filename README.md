@@ -1,5 +1,18 @@
+- [minishell](#minishell)
+- [Tips for setting up](#tips-for-setting-up)
+- [Function](#function)
+- [What is shell](#what-is-shell)
+- [Reference](#reference)
 # minishell
 create a mini shell program that mimic actual bash terminal
+
+# Tips for setting up
+1. include -lreadline to include readline library
+2. brew info readline to check if readline install in mac.
+3. from the brew info look for export and include it into c
+
+  export LDFLAGS="-L/usr/local/opt/readline/lib"
+  export CPPFLAGS="-I/usr/local/opt/readline/include"
 
 # Function
 readline
@@ -53,3 +66,5 @@ Shell is an interface between the user and the operating system.
 2. [Difference between unix, linux, posix](https://www.youtube.com/watch?v=hy4OeVCLGZ4)
 3. [Simple shell scripting](https://www.tecmint.com/create-shell-scripts-in-linux/)
 4. [Bash in 100 seconds](https://www.youtube.com/watch?v=I4EWvMFj37g)
+5. [Custom Shell video](https://www.youtube.com/watch?v=ZGmg8wEdQOM)
+6. [Order in pipe, redirection](https://stackoverflow.com/questions/12942042/pipe-redirection-precedence)
