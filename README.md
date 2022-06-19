@@ -1,5 +1,6 @@
 - [minishell](#minishell)
 - [Tips for setting up](#tips-for-setting-up)
+- [Github Flow](#github-flow)
 - [Function](#function)
 - [What is shell](#what-is-shell)
 - [Reference](#reference)
@@ -16,6 +17,7 @@ create a mini shell program that mimic actual bash terminal
 
 For example:
 gcc rl_on_new_line.c -o rl_on_new_line -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+
 
 # Function
 readline
