@@ -15,5 +15,4 @@ then I (Hean) will:
 1. git checkout development   ---   This moves me to my local development branch.
 2. git pull <your_repo_name>   ---   This pulls any changes from your github repo development branch to my local repo. 
 
-
-
+![github flow](images/github.png)
