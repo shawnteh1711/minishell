@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rl_on_new_line.c                                   :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/19 10:25:10 by steh              #+#    #+#             */
-/*   Updated: 2022/06/19 12:55:45 by steh             ###   ########.fr       */
+/*   Created: 2022/06/19 14:52:22 by steh              #+#    #+#             */
+/*   Updated: 2022/06/19 15:01:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <signal.h>
 
-
-void	handle_signals(int signo)
+void	sighandler(int signum)
 {
-	if (signo == SIGINT)
-	{
-		printf("You pressed Ctrl+C\n");	
-	}
+	printf("Caught signal %d, coming out...\n", signum);
+	exit (1);
 }
+
 int main(int argc, char const *argv[])
 {
-	char *s;
+	// ctrl + C to interupt
+	signal(SIGKILL, sighandler);
 
-	while ((s = readline("test> ")))
+	while (1)
 	{
-		// if (signal(SIGINT, handle_signals) == SIG_ERR)
-		// 	printf("failed to register intersuprs with kernal");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		printf("Going to sleep for a second...\n");
+		sleep(1);
 	}
 	return (0);
 }
+
