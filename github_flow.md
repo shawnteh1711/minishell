@@ -27,3 +27,8 @@ $ git merge upstream/master master
 # like a "git pull --rebase"
 $ git rebase upstream/master -->
 ![github flow](images/github.png)
+
+Reference
+1. [upstream flow](https://www.atlassian.com/git/tutorials/git-forks-and-upstreams)
+
+
