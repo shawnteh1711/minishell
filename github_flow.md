@@ -16,19 +16,17 @@ then I (Shawn) will:
 2. git pull <your_repo_name>   ---   This pulls any changes from your github repo development branch to my local repo. 
 
 
-<!-- $ cd PROJECT_NAME
-$ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
-$ git fetch upstream
+To handle upstream
+1. cd PROJECT_NAME
+2. git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+3. git fetch upstream
+(then: (like "git pull" which is fetch + merge)
+4. git merge upstream/master master
+(or, better, replay your local work on top of the fetched branch like a "git pull --rebase")
+5. git rebase upstream/master
 
-# then: (like "git pull" which is fetch + merge)
-$ git merge upstream/master master
-
-# or, better, replay your local work on top of the fetched branch
-# like a "git pull --rebase"
-$ git rebase upstream/master -->
-
-
-<!-- git push -u upstream development -->
+Any changes to push upstream development branch
+6. git push -u upstream development
 ![github flow](images/github.png)
 
 Reference
