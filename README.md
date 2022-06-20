@@ -89,3 +89,5 @@ Shell is an interface between the user and the operating system.
 17. [Fork and pipe](https://www.geeksforgeeks.org/c-program-demonstrate-fork-and-pipe/)
 18. [Fork and pipe tutorialpoint](https://www.tutorialspoint.com/c-program-to-demonstrate-fork-and-pipe)
 19. [Fork and pipe codevault](https://www.youtube.com/watch?v=6u_iPGVkfZ4)
+20. [Minishell video mandaron](https://www.youtube.com/watch?v=o6nW-Pqg4Rk)
+21. [Unix Processes in C playlist](https://www.youtube.com/playlist?list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY)
