@@ -26,6 +26,9 @@ $ git merge upstream/master master
 # or, better, replay your local work on top of the fetched branch
 # like a "git pull --rebase"
 $ git rebase upstream/master -->
+
+
+<!-- git push -u upstream development -->
 ![github flow](images/github.png)
 
 Reference
