@@ -1,20 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/06/24 22:23:31 by steh             ###   ########.fr       */
+/*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
+/*   Updated: 2022/06/24 22:18:27 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "parse.h"
+#include "parse.h"
 
-int main(int argc, char const *argv[])
+int parse(void)
 {
-	
+	int	i;
+
+	i = 0;
+	t_builtin builtins[] = 
+	{
+		{"exit", do_exit},
+		{NULL, NULL}
+	};
+	while (builtins[i].name != NULL)
+	{
+		if (builtins[i].name)
+		{
+			builtins[i].handler();
+			break;
+		}
+	}
 	return (0);
 }
 
+void	do_exit()
+{
+	printf("do_exit\n");
+}
