@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:59:48 by steh              #+#    #+#              #
-#    Updated: 2022/06/24 22:07:32 by steh             ###   ########.fr        #
+#    Updated: 2022/07/05 23:20:42 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,12 @@ EXECUTOR_OBJ	:= $(patsubst $(EXECUTOR_DIR)/%.c, $(OBJ_DIR)/%.o, $(EXECUTOR_SRC))
 
 OBJ				:= $(LEXER_OBJ) $(PARSER_OBJ) $(EXECUTOR_OBJ) $(SRC_OBJ)
 INC				:= -Iinc
+LINK			= -lreadline
 
 all				: $(NAME)
 
 $(NAME)			: $(OBJ)
-					@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@
+					@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@ $(LINK)
 					@echo "$(_GREEN) Project Compiled $(_RESET)"
 
 vpath %.c		: $(LEXER_DIR) $(PARSER_DIR) $(EXECUTOR_DIR) $(SRC_DIR)

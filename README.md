@@ -94,3 +94,4 @@ Shell is an interface between the user and the operating system.
 22. [Termios](https://cboard.cprogramming.com/linux-programming/158476-termios-examples.html)
 23. [Shell program explained](https://www.youtube.com/watch?v=ubt-UjcQUYg)
 24. [Shell Code Detailed] (https://www.youtube.com/watch?v=ZjzMdsTWF0U)
+25. [tutorial](https://brennan.io/2015/01/16/write-a-shell-in-c/)
