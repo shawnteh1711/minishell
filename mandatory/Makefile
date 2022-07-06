@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:59:48 by steh              #+#    #+#              #
-#    Updated: 2022/07/05 23:20:42 by steh             ###   ########.fr        #
+#    Updated: 2022/07/06 21:18:41 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,12 @@ EXECUTOR_DIR	:= $(SRC_DIR)/execute
 EXECUTOR_SRC	:= $(wildcard $(EXECUTOR_DIR)/*.c)
 EXECUTOR_OBJ	:= $(patsubst $(EXECUTOR_DIR)/%.c, $(OBJ_DIR)/%.o, $(EXECUTOR_SRC))
 
-OBJ				:= $(LEXER_OBJ) $(PARSER_OBJ) $(EXECUTOR_OBJ) $(SRC_OBJ)
+# builtin
+BUILTIN_DIR		:= $(SRC_DIR)/builtin
+BUILTIN_SRC		:= $(wildcard $(BUILTIN_DIR)/*.c)
+BUILTIN_OBJ		:= $(patsubst $(BUILTIN_DIR)/%.c, $(OBJ_DIR)/%.o, $(BUILTIN_SRC))
+
+OBJ				:= $(LEXER_OBJ) $(PARSER_OBJ) $(EXECUTOR_OBJ) $(SRC_OBJ) $(BUILTIN_OBJ)
 INC				:= -Iinc
 LINK			= -lreadline
 
@@ -45,7 +50,7 @@ $(NAME)			: $(OBJ)
 					@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@ $(LINK)
 					@echo "$(_GREEN) Project Compiled $(_RESET)"
 
-vpath %.c		: $(LEXER_DIR) $(PARSER_DIR) $(EXECUTOR_DIR) $(SRC_DIR)
+vpath %.c		: $(LEXER_DIR) $(PARSER_DIR) $(EXECUTOR_DIR) $(SRC_DIR) $(BUILTIN_DIR)
 
 $(OBJ_DIR)/%.o	: %.c
 					@mkdir -p $(OBJ_DIR)
