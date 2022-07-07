@@ -7,8 +7,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+
 void	shell_loop(void);
-void	init(void);
+void	init(t_shell *shell);
 int		parse_cmd(t_shell *shell);
 
 

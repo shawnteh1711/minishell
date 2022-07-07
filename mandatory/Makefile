@@ -6,13 +6,13 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:59:48 by steh              #+#    #+#              #
-#    Updated: 2022/07/06 21:18:41 by steh             ###   ########.fr        #
+#    Updated: 2022/07/07 19:50:21 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			:= minishell
 CC				:= gcc
-CFLAGS			:= -Wall -Werror -Wextra
+CFLAGS			:= -Wall -Werror -Wextra -g
 SRC_DIR			:= src
 OBJ_DIR			:= obj
 
@@ -41,21 +41,26 @@ BUILTIN_SRC		:= $(wildcard $(BUILTIN_DIR)/*.c)
 BUILTIN_OBJ		:= $(patsubst $(BUILTIN_DIR)/%.c, $(OBJ_DIR)/%.o, $(BUILTIN_SRC))
 
 OBJ				:= $(LEXER_OBJ) $(PARSER_OBJ) $(EXECUTOR_OBJ) $(SRC_OBJ) $(BUILTIN_OBJ)
-INC				:= -Iinc
-LINK			= -lreadline
+INC				:= -Iinc -Ilibft
+LINK			:= -lreadline -Llibft -lft
+
 
 all				: $(NAME)
 
-$(NAME)			: $(OBJ)
-					@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@ $(LINK)
+$(NAME)			: $(OBJ) $(LIBFT)
+					@make -s -C libft
+					@$(CC) $(CFLAGS) $(LIBFT) $(OBJ) $(INC) -o $@ $(LINK)
 					@echo "$(_GREEN) Project Compiled $(_RESET)"
 
 vpath %.c		: $(LEXER_DIR) $(PARSER_DIR) $(EXECUTOR_DIR) $(SRC_DIR) $(BUILTIN_DIR)
 
 $(OBJ_DIR)/%.o	: %.c
 					@mkdir -p $(OBJ_DIR)
-					@$(CC) $(INC) -c $< -o $@
+					@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 					@echo "$(_GREEN) Compiling $(_YEL) $< $(_RESET)"
+
+# $(LIBFT)		:
+# 					@make -C libft
 
 norm			:
 					@echo "$(_YEL) norminatte start $(_RESET)"
@@ -64,10 +69,12 @@ norm			:
 clean			:
 					@$(RM) $(OBJS)
 					@$(RM) -r $(OBJ_DIR)
+					@make clean -C libft
 					@echo "$(_RED) removed obj files and obj directory $(_RESET)"
 
 fclean			: clean
 					@$(RM) $(NAME)
+					@make fclean -C libft
 					@echo "$(_RED) removed $(NAME) $(_RESET)"
 
 re				: fclean all
