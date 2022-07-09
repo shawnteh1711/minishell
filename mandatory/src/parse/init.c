@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/07/07 21:14:09 by steh             ###   ########.fr       */
+/*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
+/*   Updated: 2022/07/07 20:23:30 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "lexer.h"
 
-int	main(void)
+void	init(t_shell *shell)
 {
-	// setup();
-	shell_loop();
-	return (0);
+	ft_memset(shell->line, 0, sizeof(shell->line));
+	shell->avptr = shell->line;
+
 }

@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: steh <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/07/07 21:14:09 by steh             ###   ########.fr       */
+/*   Created: 2021/12/03 13:24:53 by steh              #+#    #+#             */
+/*   Updated: 2021/12/03 13:24:54 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strrchr(const char *str, int c)
 {
-	// setup();
-	shell_loop();
-	return (0);
+	int	i;
+
+	i = (int)ft_strlen(str) + 1;
+	while (i--)
+		if (*(str + i) == (char)c)
+			return ((char *)str + i);
+	return (NULL);
 }
