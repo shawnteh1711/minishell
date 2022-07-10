@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:59:48 by steh              #+#    #+#              #
-#    Updated: 2022/07/07 19:50:21 by steh             ###   ########.fr        #
+#    Updated: 2022/07/09 19:02:18 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ BUILTIN_SRC		:= $(wildcard $(BUILTIN_DIR)/*.c)
 BUILTIN_OBJ		:= $(patsubst $(BUILTIN_DIR)/%.c, $(OBJ_DIR)/%.o, $(BUILTIN_SRC))
 
 OBJ				:= $(LEXER_OBJ) $(PARSER_OBJ) $(EXECUTOR_OBJ) $(SRC_OBJ) $(BUILTIN_OBJ)
-INC				:= -Iinc -Ilibft
-LINK			:= -lreadline -Llibft -lft
+INC				:= -Iinc -Ilibft -I/usr/local/opt/readline/include
+LINK			:= -lreadline -Llibft -lft -L/usr/local/opt/readline/lib
 
 
 all				: $(NAME)

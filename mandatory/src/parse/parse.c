@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/07 21:18:44 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/10 21:50:28 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "builtin.h"
 #include "execute.h"
 
-void	shell_loop(void)
+
+void	shell_loop()
 {
 	t_shell	shell;
+
 	while (42)
 	{
 		init(&shell);
@@ -26,77 +28,120 @@ void	shell_loop(void)
 			break ;
 		}
 		parse_cmd(&shell);
+		print_command(&shell);
 		exec_cmd(&shell);
 	}
 }
 
 int	read_cmd(t_shell *shell)
 {
-	shell->line = readline("test> ");
-	if (shell->line == NULL)
+	shell->cmdline = readline("test> ");
+	if (shell->cmdline == NULL)
 		return (-1);
-	add_history(shell->line);
-	return (0);
-}
-
-int	get_command(int i, t_shell *shell)
-{
-	char	*lineptr;
-	int		j;
-
-	i = 0;
-	j = 0;
-	lineptr = shell->line;
-	// avptr = shell->line;
-	// printf("%s\n", shell->line);
-	while (*lineptr != '\0')
-	{
-		while (*lineptr == ' ' || *lineptr == '\t')
-			lineptr++;
-		if (*lineptr == '\n' || *lineptr== '\0')
-			break ;
-		
-		cmd.args[j] = shell->avptr;
-		while (*lineptr != '\0'
-				&& *lineptr != ' '
-				&& *lineptr != '\t'
-				&& *lineptr != '>'
-				&& *lineptr != '<'
-				&& *lineptr != '|'
-				&& *lineptr != '&'
-				&& *lineptr != '\n')
-		{
-			*shell->avptr++ = *lineptr++;
-		}
-		*shell->avptr++ = '\0';
-		// if (*lineptr == ' ' || *lineptr == '\t')
-		// {
-		// 	j++;
-		// 	break ;
-		// }
-		printf("cmd[i].args[j]: %s\n", cmd.args[j]);
-		j++;
-			
-	}
+	add_history(shell->cmdline);
 	return (0);
 }
 
 int	parse_cmd(t_shell *shell)
 {
+	int	i;
+
 	get_command(0, shell);
+	if (check(shell, "<"))
+	{
+		getname(shell->infile, shell);
+	}
+	
+	i = 1;
+	while (i < PIPELINE)
+	{
+		if (check(shell, "|"))
+			get_command(i, shell);
+		else
+			break ;
+		++i;
+	}
+
+	if (check(shell, ">"))
+	{
+		if (check(shell, ">"))
+		{
+			shell->append = 1;
+		}
+		getname(shell->outfile, shell);
+	}
+	
+	if (check(shell, "\0"))
+	{
+		shell->cmd_count = i;
+		return (shell->cmd_count);
+	}
+	else
+	{
+		fprintf(stderr, "Command line syntax error\n");
+		return (-1);
+	}
 	return (0);
 }
 
-int	exec_cmd(t_shell *shell)
+void	get_command(int i, t_shell *shell)
 {
+	int		j;
+	int		inword;
 
-	(void)shell;
-	pid_t	pid = fork();
-	if (pid == -1)
-		err_exit("fork");
-	if (pid == 0)
-		execvp(cmd.args[0], cmd.args);
-	wait(NULL);
-	// execve();
-	return (0);
+	j = 0;
+	while (*shell->cmdline != '\0')
+	{
+		while (*shell->cmdline == ' ' || *shell->cmdline == '\t')
+			shell->cmdline++;
+		cmds[i].args[j] = shell->avptr;
+		while (*shell->cmdline != '\0' && *shell->cmdline != ' '
+			&& *shell->cmdline != '\t' && *shell->cmdline != '>'
+			&& *shell->cmdline != '<' && *shell->cmdline != '|'
+			&& *shell->cmdline != '&' && *shell->cmdline != '\n')
+		{
+			*shell->avptr++ = *shell->cmdline++;
+			inword = 1;
+		}
+		*shell->avptr++ = '\0';
+		// get_command2(i, j, inword, shell);
+		switch (*shell->cmdline)
+		{
+		case ' ':
+		case '\t':
+			inword = 0;
+			j++;
+			break;
+		case '<':
+		case '>':
+		case '|':
+		case '&':
+		case '\n':
+			if (inword == 0)
+				cmds[i].args[j] = NULL;
+			return ;
+		default:
+			return ;
+		}
+	}
+}
+
+void	get_command2(int i, int j, int inword, t_shell *shell)
+{
+	if (*shell->cmdline == ' ' || *shell->cmdline == '\t')
+	{
+		inword = 0;
+		j++;
+	}
+	else if (*shell->cmdline == '<' || *shell->cmdline == '>'
+		|| *shell->cmdline == '|' || *shell->cmdline == '&'
+		|| *shell->cmdline == '\n')
+	{
+		if (inword == 0)
+		{
+			cmds[i].args[j] = NULL;
+		}
+	}
+	else
+		return ;
 }

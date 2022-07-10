@@ -5,5 +5,4 @@
 
 int	exec_cmd(t_shell *shell);
 
-
 #endif
