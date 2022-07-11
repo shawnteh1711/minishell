@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 19:15:45 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 19:58:07 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	builtin(t_shell *shell)
 		{"cd", do_cd},
 		{"pwd", do_pwd},
 		{"echo", do_echo},
+		{"env", do_env},
+		{"export", do_export},
+		{"unset", do_unset},
 		{NULL, NULL}
 	};
 	while (builtins[i].name != NULL)

@@ -15,5 +15,8 @@ void	do_exit(t_shell *shell);
 void	do_cd(t_shell *shell);
 void	do_pwd(t_shell *shell);
 void	do_echo(t_shell *shell);
+void	do_env(t_shell *shell);
+void	do_export(t_shell *shell);
+void	do_unset(t_shell *shell);
 
 #endif

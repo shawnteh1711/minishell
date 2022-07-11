@@ -47,7 +47,9 @@ void	sigint_handler(int sig);
 void 	disable_veof(bool ig);
 void	disable_ctrl_c(void);
 
+// read cmd
 int		read_cmd(t_shell *shell);
+
 // utils
 void	err_exit(const char *msg);
 void	print_command(t_shell *shell);
