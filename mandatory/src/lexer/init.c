@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
-/*   Updated: 2022/07/10 21:58:17 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 11:10:07 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,22 @@ void	sigint_handler(int sig)
 
 void	init(t_shell *shell)
 {
+	int	i;
+
 	ft_memset(cmds, 0, sizeof(cmds));
 	ft_memset(shell->avline, 0, sizeof(shell->avline));
 	ft_memset(shell->infile, 0, sizeof(shell->infile));
 	ft_memset(shell->outfile, 0, sizeof(shell->outfile));
 	shell->avptr = shell->avline;
 	shell->append = 0;
+	shell->heredoc = 0;
 	shell->cmd_count = 0;
-	
+	shell->lastpid = 0;
+	i = 0;
+	while (i < PIPELINE)
+	{
+		cmds[i].infd = 0;
+		cmds[i].outfd = 1;
+		++i;
+	}
 }

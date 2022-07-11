@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/10 22:01:12 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 13:28:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,27 @@ void	getname(char *name, t_shell *shell)
 		*name++ = *shell->cmdline++;
 	}
 	*name++ = '\0';
+}
+
+void	asssign_cmd(t_shell *shell)
+{
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	while (*shell->cmdline != '\0')
+	{
+		while (*shell->cmdline == ' ' || *shell->cmdline == '\t')
+			shell->cmdline++;
+		cmds[i].args[j] = shell->avptr;
+		while (*shell->cmdline != '\0' && *shell->cmdline != ' '
+			&& *shell->cmdline != '\t' && *shell->cmdline != '>'
+			&& *shell->cmdline != '<' && *shell->cmdline != '|'
+			&& *shell->cmdline != '&' && *shell->cmdline != '\n')
+		{
+			*shell->avptr++ = *shell->cmdline++;
+		}
+		*shell->avptr++ = '\0';
+	}
 }

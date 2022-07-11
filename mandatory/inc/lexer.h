@@ -15,27 +15,32 @@
 
 typedef	struct	s_shell
 {
-	// char	avline[MAXLINE + 1];
 	char	avline[MAXLINE + 1];
 	char	*cmdline;
 	char	*avptr;
 	char	*lineptr;
-	char	*args[MAXARG + 1];
-	int		infd;
-	int		outfd;
 	int		append;
-	// char	*infile;
-	// char	*outfile;
+	int		heredoc;
 	char	infile[MAXNAME];
 	char	outfile[MAXNAME];
 	int		cmd_count;
+	int		lastpid;
 }	t_shell;
 
-t_shell	cmds[PIPELINE];
+typedef	struct s_command
+{
+	char	*args[MAXARG + 1];
+	int		infd;
+	int		outfd;
+}	t_command;
 
-int		read_cmd(t_shell *shell);
+
+t_command	cmds[PIPELINE];
+
 void	init(t_shell *shell);
+int		read_cmd(t_shell *shell);
 void	setup(void);
+void	shell_loop(void);
 void	sigint_handler(int sig);
 
 // utils
@@ -43,5 +48,6 @@ void	err_exit(const char *msg);
 void	print_command(t_shell *shell);
 int		check(t_shell *shell, char *str);
 void	getname(char *name, t_shell *shell);
+void	asssign_cmd(t_shell *shell);
 
 #endif

@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 08:43:46 by steh             ###   ########.fr       */
+/*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
+/*   Updated: 2022/07/11 08:36:35 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "lexer.h"
+#include "builtin.h"
+#include "execute.h"
 
-int	main(int ac, char *av[], char *envp[])
+void	shell_loop(void)
 {
-	(void)ac;
-	(void)av;
-	(void)envp;
-	setup();
-	shell_loop();
+	t_shell	shell;
+
+	while (42)
+	{
+		init(&shell);
+		if (read_cmd(&shell) == -1)
+		{
+			break ;
+		}
+		parse_cmd(&shell);
+		print_command(&shell);
+		exec_cmd(&shell);
+	}
+}
+
+int	read_cmd(t_shell *shell)
+{
+	shell->cmdline = readline("test> ");
+	if (shell->cmdline == NULL)
+		return (-1);
+	add_history(shell->cmdline);
 	return (0);
 }

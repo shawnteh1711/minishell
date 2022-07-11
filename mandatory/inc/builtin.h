@@ -1,12 +1,19 @@
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-typedef	void	(*cmd_handler)(void);
+#include "lexer.h"
 
-typedef	struct s_builtin
+typedef	void	(*cmd_handler)(t_shell *shell);
+typedef	struct s_builtin_cmd
 {
 	char		*name;
 	cmd_handler	handler;
-}	t_builtin;
+}	t_builtin_cmd;
+
+int		builtin(t_shell *shell);
+void	do_exit(t_shell *shell);
+void	do_cd(t_shell *shell);
+void	do_pwd(t_shell *shell);
+void	do_echo(t_shell *shell);
 
 #endif
