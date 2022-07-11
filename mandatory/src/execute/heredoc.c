@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 17:41:28 by steh             ###   ########.fr       */
+/*   Created: 2022/07/11 17:25:08 by steh              #+#    #+#             */
+/*   Updated: 2022/07/11 19:04:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,27 @@
 #include "builtin.h"
 #include "execute.h"
 
-void	shell_loop(void)
+int	heredoc(t_shell *shell)
 {
-	t_shell	shell;
-
+	// char	**buf;
+	char	*s;
+	char 	*ret;
+	
+	// buf = NULL;
+	// ft_memset(buf, 0, sizeof(buf));
+	assign_cmd(shell);
 	while (42)
 	{
-		init(&shell);
-		if (read_cmd(&shell) == -1)
+		s = readline("heredoc>");
+		if (ft_strcmp(cmds[0].args[0], s) == 0)
 			break ;
-		parse_cmd(&shell);
-		print_command(&shell);
-		exec_cmd(&shell);
+		ret = ft_strchr(s, '$');
+		if (ret != NULL)
+		{
+			ret += 1;
+			printf("%s\n", getenv(ret));
+			return (1);
+		}
 	}
-	do_exit(&shell);
-}
-
-int	read_cmd(t_shell *shell)
-{
-	shell->cmdline = readline("test> ");
-	if (shell->cmdline == NULL)
-		return (-1);
-	add_history(shell->cmdline);
-	disable_veof(true);
 	return (0);
 }

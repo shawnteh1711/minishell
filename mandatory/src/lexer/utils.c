@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 13:28:41 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 19:26:37 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ void	getname(char *name, t_shell *shell)
 	*name++ = '\0';
 }
 
-void	asssign_cmd(t_shell *shell)
+void	assign_cmd(t_shell *shell)
 {
 	int		i;
 	int		j;
+	int		stat;
+	int		inword;
 	
 	i = 0;
 	j = 0;
@@ -102,7 +104,11 @@ void	asssign_cmd(t_shell *shell)
 			&& *shell->cmdline != '&' && *shell->cmdline != '\n')
 		{
 			*shell->avptr++ = *shell->cmdline++;
+			inword = 1;
 		}
 		*shell->avptr++ = '\0';
+		stat = get_command2(&i, &j, &inword, shell);
+		if (stat == 1)
+			return ;
 	}
 }

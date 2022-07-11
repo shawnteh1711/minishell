@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 12:18:55 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 18:33:06 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int	exec_disk_cmd(t_shell *shell)
 			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY | O_CREAT
 					| O_TRUNC, 0666);
 	}
+	if (shell->heredoc == 1)
+	{
+		heredoc(shell);
+	}
+	
 	i = 0;
 	while (i < shell->cmd_count)
 	{
@@ -113,17 +118,17 @@ void	forkexec(t_shell *shell, int i)
 		// }
 		// signal(SIGINT, SIG_DFL);
 		// signal(SIGQUIT, SIG_DFL);
-		char	*const envp[] = {getenv("PATH"), NULL};
-		char	*binaryPath = "/bin/";
-		char	*const argv[] = {binaryPath, cmds[i].args[0], NULL};
+		// char	*const envp[] = {getenv("PATH"), NULL};
+		// char	*binaryPath = "/bin/";
+		// char	*const argv[] = {binaryPath, cmds[i].args[0], NULL};
 
-		printf("envp: %s\n", *envp);
-		printf("cmds[i].args[0]: %s\n", cmds[i].args[0]);
-		printf("cmds[i].args: %s\n", *cmds[i].args);
-		if (execve(binaryPath, argv, NULL) == -1)
-			perror("execvp error");
-		// if (execvp(cmds[i].args[0], cmds[i].args) == -1)
-		// 	perror("execvp error\n");
+		// printf("envp: %s\n", *envp);
+		// printf("cmds[i].args[0]: %s\n", cmds[i].args[0]);
+		// printf("cmds[i].args: %s\n", *cmds[i].args);
+		// if (execve(binaryPath, argv, NULL) == -1)
+		// 	perror("execvp error");
+		if (execvp(cmds[i].args[0], cmds[i].args) == -1)
+			perror("execvp error\n");
 		exit(EXIT_FAILURE);
 	}
 	

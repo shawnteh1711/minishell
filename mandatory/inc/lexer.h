@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <termios.h>
+#include <stdbool.h>
 #include "libft.h"
 
 #define MAXARG 20
@@ -37,17 +39,22 @@ typedef	struct s_command
 
 t_command	cmds[PIPELINE];
 
+// initialize 
 void	init(t_shell *shell);
-int		read_cmd(t_shell *shell);
 void	setup(void);
 void	shell_loop(void);
 void	sigint_handler(int sig);
+void 	disable_veof(bool ig);
+void	disable_ctrl_c(void);
 
+int		read_cmd(t_shell *shell);
 // utils
 void	err_exit(const char *msg);
 void	print_command(t_shell *shell);
 int		check(t_shell *shell, char *str);
 void	getname(char *name, t_shell *shell);
-void	asssign_cmd(t_shell *shell);
+void	assign_cmd(t_shell *shell);
+int		get_command2(int *i, int *j, int *inword, t_shell *shell);
+
 
 #endif

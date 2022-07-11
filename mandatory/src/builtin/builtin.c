@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 13:29:14 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/11 19:15:45 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	do_exit(t_shell *shell)
 	exit(EXIT_SUCCESS);
 }
 
+// error if more than one word directory
+// need to fix assign_cmd
 void	do_cd(t_shell *shell)
 {
 	char	*tmp;
 	
-	asssign_cmd(shell);
+	assign_cmd(shell);
 	if (cmds[0].args[0] == NULL)
 	{
 		tmp = getenv("HOME");
@@ -84,5 +86,16 @@ void	do_pwd(t_shell *shell)
 void	do_echo(t_shell *shell)
 {
 	(void)shell;
-
+	char	*tmp;
+	
+	assign_cmd(shell);
+	tmp = cmds[0].args[0];
+	if (ft_strcmp(tmp, "-n") == 0)
+	{
+		printf("%s", cmds[0].args[1]);
+	}
+	else
+	{
+		printf("%s\n", tmp);
+	}
 }
