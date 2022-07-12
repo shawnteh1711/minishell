@@ -27,6 +27,7 @@ typedef	struct	s_shell
 	char	outfile[MAXNAME];
 	int		cmd_count;
 	int		lastpid;
+	char	**envp;
 }	t_shell;
 
 typedef	struct s_command
@@ -42,7 +43,7 @@ t_command	cmds[PIPELINE];
 // initialize 
 void	init(t_shell *shell);
 void	setup(void);
-void	shell_loop(void);
+void	shell_loop(t_shell *shell);
 void	sigint_handler(int sig);
 void 	disable_veof(bool ig);
 void	disable_ctrl_c(void);
