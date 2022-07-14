@@ -28,6 +28,7 @@ typedef	struct	s_shell
 	int		cmd_count;
 	int		lastpid;
 	char	**envp;
+	size_t	env_size;
 }	t_shell;
 
 typedef	struct s_command

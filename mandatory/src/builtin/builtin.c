@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 19:58:07 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/13 12:13:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,16 @@
 
 int	builtin(t_shell *shell)
 {
-	int	i;
-	int	found;
+	int					i;
+	int					found;
+	const t_builtin_cmd	builtins[] = {
+	{"exit", do_exit}, {"cd", do_cd},
+	{"pwd", do_pwd}, {"echo", do_echo},
+	{"env", do_env}, {"export", do_export},
+	{"unset", do_unset}, {NULL, NULL}};
 
 	i = 0;
 	found = 0;
-	t_builtin_cmd builtins[] =
-	{
-		{"exit", do_exit},
-		{"cd", do_cd},
-		{"pwd", do_pwd},
-		{"echo", do_echo},
-		{"env", do_env},
-		{"export", do_export},
-		{"unset", do_unset},
-		{NULL, NULL}
-	};
 	while (builtins[i].name != NULL)
 	{
 		if (check(shell, builtins[i].name))
@@ -59,7 +53,7 @@ void	do_exit(t_shell *shell)
 void	do_cd(t_shell *shell)
 {
 	char	*tmp;
-	
+
 	assign_cmd(shell);
 	if (cmds[0].args[0] == NULL)
 	{
@@ -77,9 +71,9 @@ void	do_cd(t_shell *shell)
 
 void	do_pwd(t_shell *shell)
 {
-	(void)shell;
 	char	pwd[LINE_MAX];
-	
+
+	(void)shell;
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 		perror("getcwd error");
 	else
@@ -88,9 +82,9 @@ void	do_pwd(t_shell *shell)
 
 void	do_echo(t_shell *shell)
 {
-	(void)shell;
 	char	*tmp;
-	
+
+	(void)shell;
 	assign_cmd(shell);
 	tmp = cmds[0].args[0];
 	if (ft_strcmp(tmp, "-n") == 0)
