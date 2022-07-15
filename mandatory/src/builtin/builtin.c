@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/13 12:13:19 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/15 21:49:02 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,46 @@ void	do_pwd(t_shell *shell)
 		printf("%s\n", pwd);
 }
 
+// need to handle double quotes
+// need to handle $variable
+// need to handle -n flag
 void	do_echo(t_shell *shell)
 {
-	char	*tmp;
+	int		i;
+	int		j;
+	int		newline;
+	char	*line;
 
-	(void)shell;
-	assign_cmd(shell);
-	tmp = cmds[0].args[0];
-	if (ft_strcmp(tmp, "-n") == 0)
+	i = 0;
+	line = shell->cmdline;
+	while (line[i] != '\0')
 	{
-		printf("%s", cmds[0].args[1]);
-	}
-	else
-	{
-		printf("%s\n", tmp);
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (line[i] == '-' && line[i + 1] == 'n')
+		{
+			newline = 1;
+			i++;
+		}
+		if (line[i] == '"')
+		{
+			j = i + 1;
+			while (line[j] != '\0')
+			{
+				if (line[j] == '"')
+					break ;
+				j++;
+			}
+			i++;
+			j--;
+			while (i < j)
+			{
+				write(1, &line[i], sizeof(&line[i]));
+				i++;
+			}
+		}
+		else
+			write(1, &line[i], sizeof(&line[i]));
+		i++;
 	}
 }

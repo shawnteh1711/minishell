@@ -10,6 +10,6 @@
 int		parse_cmd(t_shell *shell);
 int		parse_cmd2(t_shell *shell, int i);
 void	get_command(int i, t_shell *shell);
-int		get_command2(int *i, int *j, int *inword, t_shell *shell);
+int		get_command2(int *i, int *j, int *inword, char *line);
 
 #endif

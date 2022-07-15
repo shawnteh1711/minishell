@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 19:26:37 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/15 19:38:30 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,24 @@ void	assign_cmd(t_shell *shell)
 	int		j;
 	int		stat;
 	int		inword;
-	
+	char	*line;
+
 	i = 0;
 	j = 0;
-	while (*shell->cmdline != '\0')
+	line = shell->cmdline;
+	while (*line != '\0')
 	{
-		while (*shell->cmdline == ' ' || *shell->cmdline == '\t')
-			shell->cmdline++;
+		while (*line == ' ' || *line == '\t')
+			line++;
 		cmds[i].args[j] = shell->avptr;
-		while (*shell->cmdline != '\0' && *shell->cmdline != ' '
-			&& *shell->cmdline != '\t' && *shell->cmdline != '>'
-			&& *shell->cmdline != '<' && *shell->cmdline != '|'
-			&& *shell->cmdline != '&' && *shell->cmdline != '\n')
+		while (*line != '\0' && *line != '\t' && *line != '>' && *line != '\"' && *line != '\"'
+			&& *line != '<' && *line != '|' && *line != '&' && *line != '\n')
 		{
-			*shell->avptr++ = *shell->cmdline++;
+			*shell->avptr++ = *line++;
 			inword = 1;
 		}
 		*shell->avptr++ = '\0';
-		stat = get_command2(&i, &j, &inword, shell);
+		stat = assign_cmd2(&i, &j, &inword, line);
 		if (stat == 1)
 			return ;
 	}

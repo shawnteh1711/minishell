@@ -58,7 +58,7 @@ void	print_command(t_shell *shell);
 int		check(t_shell *shell, char *str);
 void	getname(char *name, t_shell *shell);
 void	assign_cmd(t_shell *shell);
-int		get_command2(int *i, int *j, int *inword, t_shell *shell);
+int		assign_cmd2(int *i, int *j, int *inword, char *line);
 
 
 #endif
