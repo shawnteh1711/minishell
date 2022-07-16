@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/15 19:38:30 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/16 19:23:29 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	assign_cmd(t_shell *shell)
 		while (*line == ' ' || *line == '\t')
 			line++;
 		cmds[i].args[j] = shell->avptr;
-		while (*line != '\0' && *line != '\t' && *line != '>' && *line != '\"' && *line != '\"'
+		while (*line != '\0' && *line != '\t' && *line != '>' && *line != '\"'
 			&& *line != '<' && *line != '|' && *line != '&' && *line != '\n')
 		{
 			*shell->avptr++ = *line++;

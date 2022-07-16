@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/15 21:49:02 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/17 01:01:02 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	do_exit(t_shell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-// error if more than one word directory
-// need to fix assign_cmd
+// if cd .. return to two previous path, need to fix
 void	do_cd(t_shell *shell)
 {
 	char	*tmp;
@@ -82,44 +81,72 @@ void	do_pwd(t_shell *shell)
 
 // need to handle double quotes
 // need to handle $variable
+// if '$VAR' do not expand
 // need to handle -n flag
+
 void	do_echo(t_shell *shell)
 {
 	int		i;
 	int		j;
-	int		newline;
+	int		nflag;
 	char	*line;
 
 	i = 0;
+	nflag = 0;
 	line = shell->cmdline;
 	while (line[i] != '\0')
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		if (line[i] == '-' && line[i + 1] == 'n')
+		if (line[i] == '-' && line[i + 1] == 'n' && line[i + 2] == ' ')
 		{
-			newline = 1;
-			i++;
+			nflag = 1;
+			i += 2;
 		}
-		if (line[i] == '"')
+		if (line[i] == '\"')
 		{
 			j = i + 1;
 			while (line[j] != '\0')
 			{
-				if (line[j] == '"')
+				if (line[j] == '\"')
+				{
+					i = j;
 					break ;
+				}
+				if (line[j] == '$')
+				{
+					dollar2(shell, line, &i, &j);
+				}
+				ft_putchar_fd(line[j], 1);
 				j++;
 			}
-			i++;
-			j--;
-			while (i < j)
+		}
+		else if (line[i] == '\'')
+		{
+			j = i + 1;
+			while (line[j] != '\0')
 			{
-				write(1, &line[i], sizeof(&line[i]));
-				i++;
+				if (line[j] == '\'')
+				{
+					i = j;
+					break ;
+				}
+				ft_putchar_fd(line[j], 1);
+				j++;
 			}
 		}
+		else if (line[i] == '$')
+		{
+			dollar(shell, line, &i, &j);
+		}
 		else
-			write(1, &line[i], sizeof(&line[i]));
+		{
+			ft_putchar_fd(line[i], 1);
+		}
 		i++;
+	}
+	if (nflag == 0)
+	{
+		ft_putchar_fd('\n', 1);
 	}
 }
