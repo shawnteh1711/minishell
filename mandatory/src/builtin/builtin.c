@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 01:01:02 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/17 19:48:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,64 +89,25 @@ void	do_echo(t_shell *shell)
 	int		i;
 	int		j;
 	int		nflag;
-	char	*line;
 
 	i = 0;
+	j = 1;
 	nflag = 0;
-	line = shell->cmdline;
-	while (line[i] != '\0')
+	echo_cmd(shell);
+	if (ft_strnstr(cmds[0].args[0], "-n", 2))
+		nflag = 1;
+	while (cmds[0].args[j] != NULL)
 	{
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		if (line[i] == '-' && line[i + 1] == 'n' && line[i + 2] == ' ')
-		{
-			nflag = 1;
-			i += 2;
-		}
-		if (line[i] == '\"')
-		{
-			j = i + 1;
-			while (line[j] != '\0')
-			{
-				if (line[j] == '\"')
-				{
-					i = j;
-					break ;
-				}
-				if (line[j] == '$')
-				{
-					dollar2(shell, line, &i, &j);
-				}
-				ft_putchar_fd(line[j], 1);
-				j++;
-			}
-		}
-		else if (line[i] == '\'')
-		{
-			j = i + 1;
-			while (line[j] != '\0')
-			{
-				if (line[j] == '\'')
-				{
-					i = j;
-					break ;
-				}
-				ft_putchar_fd(line[j], 1);
-				j++;
-			}
-		}
-		else if (line[i] == '$')
-		{
-			dollar(shell, line, &i, &j);
-		}
-		else
-		{
-			ft_putchar_fd(line[i], 1);
-		}
-		i++;
+		// if (cmds[0].args[j] == '\"')
+		// 	printf("double quotes\n");
+		// else if (cmds[0].args[j] == '\'')
+		// 	printf("single quotes\n");
+		// else if (cmds[0].args[j] == '$')
+		// 	printf("dollar sign\n");
+		printf("%s\n", cmds[0].args[j]);
+		printf("%c\n", cmds[0].args[j][0]);
+		j++;
 	}
-	if (nflag == 0)
-	{
-		ft_putchar_fd('\n', 1);
-	}
+	
+
 }

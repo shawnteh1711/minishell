@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
-/*   Updated: 2022/07/12 15:41:12 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/17 17:46:35 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	shell_loop(t_shell *shell)
 		if (read_cmd(shell) == -1)
 			break ;
 		parse_cmd(shell);
-		print_command(shell);
+		// print_command(shell);
 		exec_cmd(shell);
 	}
 	do_exit(shell);

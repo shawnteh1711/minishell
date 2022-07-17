@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 21:38:45 by steh              #+#    #+#             */
-/*   Updated: 2022/07/14 13:33:18 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/17 19:06:38 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	ft_setenv(t_shell *shell, const char *key, char *value)
 int	ft_unsetenv(t_shell *shell, const char *name)
 {
 	int		i;
-	// int		j;
 	size_t	len;
 
 	i = 0;
@@ -75,12 +74,12 @@ int	ft_unsetenv(t_shell *shell, const char *name)
 		if (ft_strncmp(name, shell->envp[i], len) == 0
 			&& (shell->envp[i][len] == '=' || shell->envp[i][len] == '\0'))
 		{
-			ft_memmove(&shell->envp[i], &shell->envp[i + 1], sizeof(char *) * (shell->env_size - i));
+			ft_memmove(&shell->envp[i], &shell->envp[i + 1],
+				sizeof(char *) * (shell->env_size - i));
 			shell->envp[shell->env_size - 1] = NULL;
 			return (0);
 		}
 		i++;
 	}
 	return (-1);
-
 }

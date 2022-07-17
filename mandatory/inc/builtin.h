@@ -27,6 +27,7 @@ int		ft_unsetenv(t_shell *shell, const char *name);
 //echo utils
 void	dollar(t_shell *shell, char *line, int *i, int *j);
 void	dollar2(t_shell *shell, char *line, int *i, int *j);
-
+void	echo_cmd(t_shell *shell);
+void	echo_cmd2(int *j, char *line);
 
 #endif
