@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 19:48:59 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/17 23:35:50 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,72 @@ void	do_pwd(t_shell *shell)
 
 void	do_echo(t_shell *shell)
 {
-	int		i;
 	int		j;
+	int		k;
 	int		nflag;
+	char	*ret;
+	char	*start;
+	// char	*end;
+	// char	*target = NULL;
 
-	i = 0;
-	j = 1;
+	j = 0;
 	nflag = 0;
 	echo_cmd(shell);
-	if (ft_strnstr(cmds[0].args[0], "-n", 2))
-		nflag = 1;
-	while (cmds[0].args[j] != NULL)
+	ret = ft_strnstr(cmds[0].args[j], "-n", 2);
+	if (ret != NULL)
 	{
-		// if (cmds[0].args[j] == '\"')
-		// 	printf("double quotes\n");
-		// else if (cmds[0].args[j] == '\'')
-		// 	printf("single quotes\n");
-		// else if (cmds[0].args[j] == '$')
-		// 	printf("dollar sign\n");
-		printf("%s\n", cmds[0].args[j]);
-		printf("%c\n", cmds[0].args[j][0]);
+		nflag = 1;
 		j++;
 	}
-	
-
+	while (cmds[0].args[j] != NULL)
+	{
+		k = 0;
+		if (cmds[0].args[j][k] == '\"')
+		{
+			k++;
+			while (cmds[0].args[j][k] != '\"')
+			{
+				if (cmds[0].args[j][k] == '$')
+				{
+					printf("THIS IS A DOLLAR");
+				}
+				else
+					printf("%c", cmds[0].args[j][k]);
+				k++;
+			}
+			break ;
+		}
+		else if (cmds[0].args[j][k] == '\'')
+		{
+			while (cmds[0].args[j][k] != '\'')
+			{
+				printf("%c", cmds[0].args[j][k]);
+				k++;
+			}
+			break ;
+		}
+		else if (cmds[0].args[j][k] == '$')
+		{
+			if ((start = strstr(cmds[0].args[j], "$")))
+			{
+				start += ft_strlen("$");
+				// if ((end = strstr(start, "\0")))
+				// {
+				// 	target = (char *)malloc(end - start + 1);
+				// 	ft_memcpy(target, start, end - start );
+				// 	target[end - start] = '\0';
+				// }
+				ret = ft_getenv(shell, start);
+				printf("%s", ret);
+			}
+			// if (target)
+			// 	printf( "%s\n", target);
+			
+		}
+		else
+			printf("%s", cmds[0].args[j]);
+		j++;
+	}
+	if (nflag == 0)
+		printf("\n");
 }
