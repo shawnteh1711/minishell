@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 23:23:44 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 22:50:43 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/18 17:19:15 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,11 @@ void	dollar2(t_shell *shell, char *line, int *i, int *j)
 		perror("getenv dollar");
 }
 
-char	*ck_space(t_shell *shell, char *line)
+char	*ck_cmd(t_shell *shell, char *line)
 {
 	while (*line != '\0' && *line != '\t' && *line != ' '
 		&& *line != '>' && *line != '<' && *line != '|'
-		&& *line != '&' && *line != '\n')
-		*shell->avptr++ = *line++;
-	return (line);
-}
-
-char	*ck_nospace(t_shell *shell, char *line)
-{
-	while (*line != '\0' && *line != '\t' && *line != '>'
-		&& *line != '<' && *line != '|'
+		// && *line != '\"' && *line != '\'' && *line != '$'
 		&& *line != '&' && *line != '\n')
 		*shell->avptr++ = *line++;
 	return (line);
@@ -104,11 +96,10 @@ void	echo_cmd(t_shell *shell)
 	{
 		while (*line == ' ' || *line == '\t')
 			line++;
+		// while (*line == '\"' || *line == '\'' || *line == '$')
+		// 	line++;
 		cmds[i].args[j] = shell->avptr;
-		if (j == 0)
-			line = ck_space(shell, line);
-		else
-			line = ck_nospace(shell, line);
+		line = ck_cmd(shell, line);
 		*shell->avptr++ = '\0';
 		echo_cmd2(&i, &j, line);
 	}
@@ -123,9 +114,13 @@ void	echo_cmd2(int *i, int *j, char *line)
 			(*j)++;
 			break ;
 		}
+		// if (*line == '\"' || *line == '\'' || *line == '$')
+		// {
+		// 	(*j)++;
+		// 	break ;
+		// }
 		else if (*line == '<' || *line == '>' || *line == '|'
-			|| *line == '&' || *line == '\n' || *line == '\"'
-			|| *line == '\''|| *line == '$')
+			|| *line == '&' || *line == '\n')
 		{
 			cmds[*i].args[*j] = NULL;
 			return ;

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 23:35:50 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/18 22:46:49 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,77 +79,90 @@ void	do_pwd(t_shell *shell)
 		printf("%s\n", pwd);
 }
 
-// need to handle double quotes
-// need to handle $variable
-// if '$VAR' do not expand
-// need to handle -n flag
+char	*ft_split_quot(char **line, char *quotes)
+{
+	int		qflag;
+	char	*start;
+	char	*end;
+	char	*target;
+	
+	end = NULL;
+	target = NULL;
+	qflag = 0;
+	if ((start = strstr(*line, quotes)))
+	{
+		start += strlen(quotes);
+		if ((end = strstr(start, quotes)))
+		{
+			target = (char *)malloc(end - start + 1);
+			memcpy( target, start, end - start);
+			target[end - start] = '\0';
+		}
+	}
+	if (target)
+		printf("%s", target );
+	free(target);
+	return (end);
+	// if(qflag % 2 == 0)
+	// {
+	// 	printf("\nGiven string is a valid string.");
+	// }
+	// else
+	// {
+	// 	printf("\nGiven string is not a valid string.");
+	// }
+}
 
 void	do_echo(t_shell *shell)
 {
-	int		j;
-	int		k;
-	int		nflag;
-	char	*ret;
-	char	*start;
-	// char	*end;
-	// char	*target = NULL;
+	int			j;
+	int			k;
+	int			nflag;
+	char		*ret;
+	char		*start;
+	t_command	cmds_cp[PIPELINE];
 
 	j = 0;
 	nflag = 0;
 	echo_cmd(shell);
-	ret = ft_strnstr(cmds[0].args[j], "-n", 2);
-	if (ret != NULL)
-	{
-		nflag = 1;
-		j++;
-	}
-	while (cmds[0].args[j] != NULL)
+	cmds_cp[0].args[j] = cmds[0].args[j];
+	while (cmds_cp[0].args[j] != NULL)
 	{
 		k = 0;
-		if (cmds[0].args[j][k] == '\"')
+		ret = ft_strnstr(cmds_cp[0].args[j], "-n", 2);
+		if (ret != NULL)
+			nflag = 1;
+		while (cmds_cp[0].args[j][k] != '\0')
 		{
-			k++;
-			while (cmds[0].args[j][k] != '\"')
+			if (cmds_cp[0].args[j][k] == '$')
 			{
-				if (cmds[0].args[j][k] == '$')
+				if ((start = ft_strstr(cmds_cp[0].args[j], "$")))
 				{
-					printf("THIS IS A DOLLAR");
+					char arr[10];
+					int	id = 0;
+					start += ft_strlen("$");
+					while (ft_isalpha(*start))
+					{
+						arr[id] = *start;
+						id++;
+						start++;;
+					}
+					ret = ft_getenv(shell, arr);
+					printf("%s", ret);
+					cmds_cp[0].args[j] = start;
 				}
-				else
-					printf("%c", cmds[0].args[j][k]);
-				k++;
 			}
-			break ;
-		}
-		else if (cmds[0].args[j][k] == '\'')
-		{
-			while (cmds[0].args[j][k] != '\'')
+			else if (cmds_cp[0].args[j][k] == '\"')
 			{
-				printf("%c", cmds[0].args[j][k]);
-				k++;
+				cmds_cp[0].args[j] = ft_split_quot(&cmds_cp[0].args[j], "\"");
 			}
-			break ;
-		}
-		else if (cmds[0].args[j][k] == '$')
-		{
-			if ((start = strstr(cmds[0].args[j], "$")))
+			else if (cmds_cp[0].args[j][k] == '\'')
 			{
-				start += ft_strlen("$");
-				// if ((end = strstr(start, "\0")))
-				// {
-				// 	target = (char *)malloc(end - start + 1);
-				// 	ft_memcpy(target, start, end - start );
-				// 	target[end - start] = '\0';
-				// }
-				ret = ft_getenv(shell, start);
-				printf("%s", ret);
+				cmds_cp[0].args[j] = ft_split_quot(&cmds_cp[0].args[j], "\'");
 			}
-			// if (target)
-			// 	printf( "%s\n", target);
-			
+			k++;
 		}
-		else
-			printf("%s", cmds[0].args[j]);
+		// printf("%s", cmds_cp[0].args[j]);
 		j++;
 	}
 	if (nflag == 0)
