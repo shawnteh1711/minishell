@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 22:55:44 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/19 21:52:40 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_cmd(t_shell *shell)
 		else
 			break ;
 		++i;
-	}
+	}	
 	stat = parse_cmd2(shell, i);
 	if (stat)
 		return (stat);

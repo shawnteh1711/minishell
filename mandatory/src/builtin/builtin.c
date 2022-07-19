@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/18 22:46:49 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/19 22:52:25 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,38 +79,39 @@ void	do_pwd(t_shell *shell)
 		printf("%s\n", pwd);
 }
 
-char	*ft_split_quot(char **line, char *quotes)
+char	*ft_split_quot(t_shell *shell, char **line, char *quotes)
 {
-	int		qflag;
 	char	*start;
 	char	*end;
 	char	*target;
+	char	*ret;
 	
 	end = NULL;
 	target = NULL;
-	qflag = 0;
 	if ((start = strstr(*line, quotes)))
 	{
 		start += strlen(quotes);
 		if ((end = strstr(start, quotes)))
 		{
 			target = (char *)malloc(end - start + 1);
-			memcpy( target, start, end - start);
+			ft_memcpy(target, start, end - start + 1);
 			target[end - start] = '\0';
 		}
 	}
-	if (target)
-		printf("%s", target );
-	free(target);
-	return (end);
-	// if(qflag % 2 == 0)
-	// {
-	// 	printf("\nGiven string is a valid string.");
-	// }
-	// else
-	// {
-	// 	printf("\nGiven string is not a valid string.");
-	// }
+	if (target && ft_strcmp(quotes, "\'") == 0)
+		printf("%s", target);
+	else if (target && ft_strcmp(quotes, "\"") == 0)
+	{
+		if (target[0] == '$')
+			target += ft_strlen("$");
+		ret = ft_getenv(shell, target);
+		if (ret == NULL)
+			printf("%s", target);
+		else
+			printf("%s", ret);
+	}
+	// free(target);
+	return (end++);
 }
 
 void	do_echo(t_shell *shell)
@@ -125,13 +126,17 @@ void	do_echo(t_shell *shell)
 	j = 0;
 	nflag = 0;
 	echo_cmd(shell);
+	ft_memset(cmds_cp, 0, sizeof(cmds_cp));
 	cmds_cp[0].args[j] = cmds[0].args[j];
 	while (cmds_cp[0].args[j] != NULL)
 	{
 		k = 0;
 		ret = ft_strnstr(cmds_cp[0].args[j], "-n", 2);
 		if (ret != NULL)
+		{
 			nflag = 1;
+			j++;
+		}
 		while (cmds_cp[0].args[j][k] != '\0')
 		{
 			if (cmds_cp[0].args[j][k] == '$')
@@ -154,15 +159,16 @@ void	do_echo(t_shell *shell)
 			}
 			else if (cmds_cp[0].args[j][k] == '\"')
 			{
-				cmds_cp[0].args[j] = ft_split_quot(&cmds_cp[0].args[j], "\"");
+				cmds_cp[0].args[j] = ft_split_quot(shell, &cmds_cp[0].args[j], "\"");
 			}
 			else if (cmds_cp[0].args[j][k] == '\'')
 			{
-				cmds_cp[0].args[j] = ft_split_quot(&cmds_cp[0].args[j], "\'");
+				cmds_cp[0].args[j] = ft_split_quot(shell, &cmds_cp[0].args[j], "\'");
 			}
+			else
+				printf("%c", cmds_cp[0].args[j][k]);
 			k++;
 		}
-		// printf("%s", cmds_cp[0].args[j]);
 		j++;
 	}
 	if (nflag == 0)
