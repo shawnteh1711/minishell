@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 23:23:44 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:08:20 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 01:50:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,32 @@ void	echo_cmd2(int *i, int *j, char *line)
 			return ;
 	}
 	return ;
+}
+
+char	*ft_get_name(t_shell *shell, char **line, char *quotes)
+{
+	char	*start;
+	char	arr[10];
+	char	*ret;
+	int		i;
+
+	i = 0;
+	ft_memset(arr, 0, sizeof(arr));
+	start = ft_strstr(*line, quotes);
+	if (start != NULL)
+	{
+		start += ft_strlen("$");
+		while (ft_isalpha(*start))
+		{
+			arr[i] = *start;
+			i++;
+			start++;
+		}
+		arr[i] = '\0';
+		ret = ft_getenv(shell, arr);
+		if (ret == NULL)
+			return (start);
+		printf("%s", ret);
+	}
+	return (start);
 }

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 23:23:44 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:44:15 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 01:50:52 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_crt_target(char *start, char **end, char *target, char *quotes)
 	return (target);
 }
 
-
 char	*ft_split_quot(t_shell *shell, char **line, char *quotes)
 {
 	char	*start;
@@ -44,17 +43,6 @@ char	*ft_split_quot(t_shell *shell, char **line, char *quotes)
 	target = NULL;
 	start = ft_strstr(*line, quotes);
 	target = ft_crt_target(start, &end, target, quotes);
-	// if (start != NULL)
-	// {
-	// 	start += ft_strlen(quotes);
-	// 	end = ft_strstr(start, quotes);
-	// 	if (end != NULL)
-	// 	{
-	// 		target = (char *)malloc(end - start + 1);
-	// 		ft_memcpy(target, start, end - start + 1);
-	// 		target[end - start] = '\0';
-	// 	}
-	// }
 	if (target && ft_strcmp(quotes, "\'") == 0)
 		printf("%s", target);
 	else if (target && ft_strcmp(quotes, "\"") == 0)
@@ -67,36 +55,8 @@ char	*ft_split_quot(t_shell *shell, char **line, char *quotes)
 		else
 			printf("%s", ret);
 	}
-	// free(target);
+	free(target);
 	return (end += 1);
-}
-
-char	*ft_get_name(t_shell *shell, char **line, char *quotes)
-{
-	char	*start;
-	char	arr[10];
-	char	*ret;
-	int		i;
-
-	i = 0;
-	ft_memset(arr, 0, sizeof(arr));
-	start = ft_strstr(*line, quotes);
-	if (start != NULL)
-	{
-		start += ft_strlen("$");
-		while (ft_isalpha(*start))
-		{
-			arr[i] = *start;
-			i++;
-			start++;
-		}
-		arr[i] = '\0';
-		ret = ft_getenv(shell, arr);
-		if (ret == NULL)
-			return (start);
-		printf("%s", ret);
-	}
-	return (start);
 }
 
 // echo -nnn -nxxx $USER HELLO

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 18:33:06 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 01:49:00 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	forkexec(t_shell *shell, int i)
 		// printf("cmds[i].args: %s\n", *cmds[i].args);
 		// if (execve(binaryPath, argv, NULL) == -1)
 		// 	perror("execvp error");
+		// system("leaks minishell");
 		if (execvp(cmds[i].args[0], cmds[i].args) == -1)
 			perror("execvp error\n");
 		exit(EXIT_FAILURE);
