@@ -25,9 +25,14 @@ void	ft_setenv(t_shell *shell, const char *key, char *value);
 int		ft_unsetenv(t_shell *shell, const char *name);
 
 //echo utils
-void	dollar(t_shell *shell, char *line, int *i, int *j);
-void	dollar2(t_shell *shell, char *line, int *i, int *j);
 void	echo_cmd(t_shell *shell);
 void	echo_cmd2(int *i, int *j, char *line);
+char	*ck_cmd(t_shell *shell, char *line);
+
+//echo utils2
+char	*ft_split_quot(t_shell *shell, char **line, char *quotes);
+char	*ft_get_name(t_shell *shell, char **line, char *quotes);
+char	*ck_nflag(char **line, int *j, int *nflag);
+void	ft_ck_echo(t_shell *shell, char **c, int *j, int *nflag);
 
 #endif
