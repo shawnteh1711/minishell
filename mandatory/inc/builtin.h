@@ -34,5 +34,6 @@ char	*ft_split_quot(t_shell *shell, char **line, char *quotes);
 char	*ft_get_name(t_shell *shell, char **line, char *quotes);
 char	*ck_nflag(char **line, int *j, int *nflag);
 void	ft_ck_echo(t_shell *shell, char **c, int *j, int *nflag);
+char	*ft_crt_target(char *start, char **end, char *target, char *quotes);
 
 #endif

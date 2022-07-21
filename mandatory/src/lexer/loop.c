@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
-/*   Updated: 2022/07/19 22:53:55 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:38:23 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	read_cmd(t_shell *shell)
 	if (shell->cmdline == NULL)
 		return (-1);
 	add_history(shell->cmdline);
-	disable_veof(true);
+	disable_ctrl_d(true);
 	return (0);
 }

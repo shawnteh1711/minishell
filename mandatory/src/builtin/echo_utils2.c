@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 23:23:44 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:50:52 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 10:56:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ char	*ft_split_quot(t_shell *shell, char **line, char *quotes)
 	target = NULL;
 	start = ft_strstr(*line, quotes);
 	target = ft_crt_target(start, &end, target, quotes);
+	if (target == NULL)
+	{
+		printf("quotes not close\n");
+		return (NULL);
+	}
 	if (target && ft_strcmp(quotes, "\'") == 0)
 		printf("%s", target);
 	else if (target && ft_strcmp(quotes, "\"") == 0)

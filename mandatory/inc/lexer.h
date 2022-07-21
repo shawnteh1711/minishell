@@ -46,7 +46,7 @@ void	init(t_shell *shell);
 void	setup(void);
 void	shell_loop(t_shell *shell);
 void	sigint_handler(int sig);
-void 	disable_veof(bool ig);
+void 	disable_ctrl_d(bool ig);
 void	disable_ctrl_c(void);
 
 // read cmd

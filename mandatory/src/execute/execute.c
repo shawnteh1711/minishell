@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:49:00 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 11:12:47 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	exec_cmd(t_shell *shell)
 {
-
 	exec_disk_cmd(shell);
 	// (void)shell;
 	// char	*path = cmds[0].args[0];
 	// char	*argv[] = {path, NULL};
 	// char	*envp[] = {getenv("PATH"), NULL};
-
 	// pid_t	pid = fork();
 	// if (pid == -1)
 	// 	err_exit("fork");
@@ -50,17 +48,16 @@ int	exec_disk_cmd(t_shell *shell)
 	if (*shell->outfile != '\0')
 	{
 		if (shell->append)
-			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY | O_CREAT
-					| O_APPEND, 0666);
+			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+			| O_CREAT | O_APPEND, 0666);
 		else
-			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY | O_CREAT
-					| O_TRUNC, 0666);
+			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+			| O_CREAT | O_TRUNC, 0666);
 	}
 	if (shell->heredoc == 1)
 	{
 		heredoc(shell);
 	}
-	
 	i = 0;
 	while (i < shell->cmd_count)
 	{
@@ -71,11 +68,13 @@ int	exec_disk_cmd(t_shell *shell)
 			cmds[i + 1].infd = fds[0];
 		}
 		forkexec(shell, i);
-		if ((fd = cmds[i].infd) != 0)
+		fd = cmds[i].infd;
+		if (fd != 0)
 		{
 			close(fd);
 		}
-		if ((fd = cmds[i].outfd) != 1)
+		fd = cmds[i].outfd;
+		if (fd != 1)
 		{
 			close(fd);
 		}
@@ -90,7 +89,6 @@ void	forkexec(t_shell *shell, int i)
 {
 	pid_t	pid;
 	// int		j;
-	
 	pid = fork();
 	if (pid == -1)
 		err_exit("fork");
@@ -121,7 +119,6 @@ void	forkexec(t_shell *shell, int i)
 		// char	*const envp[] = {getenv("PATH"), NULL};
 		// char	*binaryPath = "/bin/";
 		// char	*const argv[] = {binaryPath, cmds[i].args[0], NULL};
-
 		// printf("envp: %s\n", *envp);
 		// printf("cmds[i].args[0]: %s\n", cmds[i].args[0]);
 		// printf("cmds[i].args: %s\n", *cmds[i].args);
@@ -132,5 +129,4 @@ void	forkexec(t_shell *shell, int i)
 			perror("execvp error\n");
 		exit(EXIT_FAILURE);
 	}
-	
 }

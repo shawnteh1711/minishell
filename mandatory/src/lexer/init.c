@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
-/*   Updated: 2022/07/11 16:09:43 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 11:08:15 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ void	setup(void)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	disable_ctrl_c();
-	disable_veof(false);
-
+	disable_ctrl_d(false);
 }
 
 // Disable Ctrl+D
-void disable_veof(bool ig)
+void	disable_ctrl_d(bool ig)
 {
 	struct termios	t;
 	int				flag;
-	
+
 	flag = 0;
 	tcgetattr(STDIN_FILENO, &t);
 	if (ig)
@@ -42,8 +41,8 @@ void disable_veof(bool ig)
 // prevent ^C from showing after press Ctrl+C
 void	disable_ctrl_c(void)
 {
-	struct termios t;
-	
+	struct termios	t;
+
 	tcgetattr(STDIN_FILENO, &t);
 	t.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &t);

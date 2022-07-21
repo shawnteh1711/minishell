@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:37:28 by steh              #+#    #+#             */
-/*   Updated: 2022/07/15 16:21:41 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 11:08:48 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 #include "lexer.h"
 #include "builtin.h"
 #include "execute.h"
+
+char	*ck_cmdline(t_shell *shell, char *line, int *inword)
+{
+	while (*line != '\0' && *line != '\t' && *line != ' '
+		&& *line != '>' && *line != '<' && *line != '|'
+		&& *line != '&' && *line != '\n')
+	{
+		*shell->avptr++ = *line++;
+		*inword = 1;
+	}
+	return (line);
+}
 
 void	get_command(int i, t_shell *shell)
 {
@@ -30,14 +42,7 @@ void	get_command(int i, t_shell *shell)
 		while (*line == ' ' || *line == '\t')
 			line++;
 		cmds[i].args[j] = shell->avptr;
-		while (*line != '\0' && *line != ' '
-			&& *line != '\t' && *line != '>'
-			&& *line != '<' && *line != '|'
-			&& *line != '&' && *line != '\n')
-		{
-			*shell->avptr++ = *line++;
-			inword = 1;
-		}
+		line = ck_cmdline(shell, line, &inword);
 		*shell->avptr++ = '\0';
 		stat = get_command2(&i, &j, &inword, line);
 		if (stat == 1)

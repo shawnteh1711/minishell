@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:09:35 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:48:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,64 @@ void	do_exit(t_shell *shell)
 	exit(EXIT_SUCCESS);
 }
 
+void	do_cd2(void)
+{
+	int		ret;
+	char	cwd[LINE_MAX];
+	int		i;
+
+	i = 0;
+	ft_memset(cwd, 0, sizeof(cwd));
+	getcwd(cwd, sizeof(cwd));
+	ret = ft_strcmp(cmds[0].args[0], "..");
+	if (ret == 0)
+	{
+		// i = ft_strlen(cwd) - 1;
+		// while (i >= 0)
+		// {
+		// 	if (cwd[i] == '/')
+		// 	{
+		// 		cwd[i] = '\0';
+		// 		break;
+		// 	}
+		// 	i--;
+		// }
+		// chdir(cwd);
+		chdir("..");
+		getcwd(cwd, sizeof(cwd));
+	}
+	else if (chdir(cmds[0].args[0]) != 0)
+		perror("chdir error");
+	else
+		chdir(cmds[0].args[0]);
+}
+
 // if cd .. return to two previous path, need to fix
+// cd - go the the OLDPWD
 void	do_cd(t_shell *shell)
 {
 	char	*tmp;
+	char	*start;
+	char	*end;
+	char	*target;
 
+	end = NULL;
+	target = NULL;
 	assign_cmd(shell);
 	if (cmds[0].args[0] == NULL)
 	{
 		tmp = getenv("HOME");
 		chdir(tmp);
 	}
-	else
+	else if (*cmds[0].args[0] == '\'')
 	{
-		if (chdir(cmds[0].args[0]) != 0)
-			perror("chdir error");
-		else
-			chdir(cmds[0].args[0]);
+		start = ft_strstr(cmds[0].args[0], "\'");
+		target = ft_crt_target(start, &end, target, "\'");
+		chdir(target);
+		free(target);
 	}
+	else
+		do_cd2();
 }
 
 void	do_pwd(t_shell *shell)
@@ -72,6 +112,7 @@ void	do_pwd(t_shell *shell)
 	char	pwd[LINE_MAX];
 
 	(void)shell;
+	ft_memset(pwd, 0, sizeof(pwd));
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 		perror("getcwd error");
 	else
