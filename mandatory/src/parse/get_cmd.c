@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:37:28 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 11:08:48 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/23 21:12:49 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ void	get_command(int i, t_shell *shell)
 	int		j;
 	int		inword;
 	int		stat;
-	char	*line;
+	// char	*line;
 
 	j = 0;
 	stat = 0;
-	line = shell->cmdline;
-	while (*line != '\0')
+	// line = shell->cmdline;
+	while (*shell->cmdline != '\0')
 	{
-		while (*line == ' ' || *line == '\t')
-			line++;
+		while (*shell->cmdline == ' ' || *shell->cmdline == '\t')
+			shell->cmdline++;
 		cmds[i].args[j] = shell->avptr;
-		line = ck_cmdline(shell, line, &inword);
+		shell->cmdline = ck_cmdline(shell, shell->cmdline, &inword);
 		*shell->avptr++ = '\0';
-		stat = get_command2(&i, &j, &inword, line);
+		stat = get_command2(&i, &j, &inword, shell->cmdline);
 		if (stat == 1)
 			return ;
 	}

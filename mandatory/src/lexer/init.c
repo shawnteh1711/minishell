@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 11:08:15 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/23 21:12:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init(t_shell *shell)
 	ft_memset(shell->infile, 0, sizeof(shell->infile));
 	ft_memset(shell->outfile, 0, sizeof(shell->outfile));
 	shell->avptr = shell->avline;
+	shell->lineptr = shell->cmdline;
 	shell->append = 0;
 	shell->heredoc = 0;
 	shell->cmd_count = 0;

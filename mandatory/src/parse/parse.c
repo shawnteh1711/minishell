@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/19 21:52:40 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/23 21:42:53 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,31 @@ int	parse_cmd(t_shell *shell)
 	int	i;
 	int	stat;
 
-	if (builtin(shell))
-		return (0);
-	get_command(0, shell);
-	if (check(shell, "<"))
+	while (shell->cmdline)
 	{
+		if (builtin(shell))
+			continue ;
+		get_command(0, shell);
 		if (check(shell, "<"))
-			shell->heredoc = 1;
-		else
-			getname(shell->infile, shell);
+		{
+			if (check(shell, "<"))
+				shell->heredoc = 1;
+			else
+				getname(shell->infile, shell);
+		}
+		i = 1;
+		while (i < PIPELINE)
+		{
+			if (check(shell, "|"))
+				get_command(i, shell);
+			else
+				break ;
+			++i;
+		}	
+		stat = parse_cmd2(shell, i);
+		if (stat)
+			return (stat);
 	}
-	i = 1;
-	while (i < PIPELINE)
-	{
-		if (check(shell, "|"))
-			get_command(i, shell);
-		else
-			break ;
-		++i;
-	}	
-	stat = parse_cmd2(shell, i);
-	if (stat)
-		return (stat);
 	return (0);
 }
 

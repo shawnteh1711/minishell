@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:57:28 by steh              #+#    #+#             */
-/*   Updated: 2022/07/17 19:07:07 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/23 20:35:45 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	do_export(t_shell *shell)
 	while (shell->envp[i] != NULL)
 		i++;
 	assign_cmd(shell);
+	if (ft_strchr(cmds[0].args[0], '=') == NULL)
+	{
+		printf("export must be key=value\n");
+		return ;
+	}
 	var = ft_strdup(cmds[0].args[0]);
 	arr = ft_split(var, '=');
 	ret = ft_getenv(shell, arr[0]);

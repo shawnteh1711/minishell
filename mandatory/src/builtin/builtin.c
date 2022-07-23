@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 21:16:52 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 12:48:39 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/23 21:26:47 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,6 @@ void	do_cd2(void)
 	ret = ft_strcmp(cmds[0].args[0], "..");
 	if (ret == 0)
 	{
-		// i = ft_strlen(cwd) - 1;
-		// while (i >= 0)
-		// {
-		// 	if (cwd[i] == '/')
-		// 	{
-		// 		cwd[i] = '\0';
-		// 		break;
-		// 	}
-		// 	i--;
-		// }
-		// chdir(cwd);
 		chdir("..");
 		getcwd(cwd, sizeof(cwd));
 	}
@@ -88,6 +77,7 @@ void	do_cd(t_shell *shell)
 	char	*end;
 	char	*target;
 
+	(void)shell;
 	end = NULL;
 	target = NULL;
 	assign_cmd(shell);
@@ -127,7 +117,8 @@ void	do_echo(t_shell *shell)
 
 	j = 0;
 	nflag = 0;
-	echo_cmd(shell);
+	get_command(0, shell);
+	// echo_cmd(shell);
 	ft_memset(cmds_cp, 0, sizeof(cmds_cp));
 	cmds_cp[0] = cmds[0];
 	ft_ck_echo(shell, &cmds_cp[0].args[j], &j, &nflag);
