@@ -36,6 +36,8 @@ typedef	struct s_command
 	char	*args[MAXARG + 1];
 	int		infd;
 	int		outfd;
+	// char	infile[MAXNAME];
+	// char	outfile[MAXNAME];
 }	t_command;
 
 
@@ -59,6 +61,9 @@ int		check(t_shell *shell, char *str);
 void	getname(char *name, t_shell *shell);
 void	assign_cmd(t_shell *shell);
 int		assign_cmd2(int *i, int *j, int *inword, char *line);
+
+
+int		check2(t_command *cmds, char *str);
 
 
 #endif

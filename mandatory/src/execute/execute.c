@@ -6,14 +6,21 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 11:12:47 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/25 20:51:33 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtin.h"
+#include "parse.h"
+#include "lexer.h"
 #include "execute.h"
 
 int	exec_cmd(t_shell *shell)
 {
+	//check if command is builtin 
+		//if builtin; execve builtin
+	// if (builtin(shell))
+	// 	return (0);
 	exec_disk_cmd(shell);
 	// (void)shell;
 	// char	*path = cmds[0].args[0];

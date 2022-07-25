@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/23 21:26:03 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/25 13:43:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ int	check(t_shell *shell, char *str)
 		shell->cmdline = p;
 		return (1);
 	}
+	return (0);
+}
+
+int	check2(t_command *cmds, char *str)
+{
+	if (ft_strcmp(cmds[0].args[0], str) == 0)
+		return (1);
 	return (0);
 }
 
