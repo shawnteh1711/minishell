@@ -36,8 +36,8 @@ typedef	struct s_command
 	char	*args[MAXARG + 1];
 	int		infd;
 	int		outfd;
-	// char	infile[MAXNAME];
-	// char	outfile[MAXNAME];
+	char	infile[MAXNAME];
+	char	outfile[MAXNAME];
 }	t_command;
 
 

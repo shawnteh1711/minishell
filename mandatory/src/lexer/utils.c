@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 21:14:39 by steh              #+#    #+#             */
-/*   Updated: 2022/07/25 13:43:12 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/25 21:27:43 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,23 @@ void	print_command(t_shell *shell)
 	int	j;
 
 	printf("cmd_count = %d\n", shell->cmd_count);
-	if (*shell->infile != '\0')
-	{
-		printf("infile = [%s]\n", shell->infile);
-	}
-	if (*shell->outfile != '\0')
-	{
-		printf("outfile = [%s]\n", shell->outfile);
-	}
+	// if (*shell->infile != '\0')
+	// {
+	// 	printf("infile = [%s]\n", shell->infile);
+	// }
+	// if (*shell->outfile != '\0')
+	// {
+	// 	printf("outfile = [%s]\n", shell->outfile);
+	// }
 	i = 0;
+	if (*cmds[i].infile != '\0')
+	{
+		printf("infile = [%s]\n", cmds[i].infile);
+	}
+	if (*cmds[i].outfile != '\0')
+	{
+		printf("outfile = [%s]\n", cmds[i].outfile);
+	}
 	while (i < shell->cmd_count)
 	{
 		j = 0;

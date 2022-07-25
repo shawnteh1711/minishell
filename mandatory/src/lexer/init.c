@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
-/*   Updated: 2022/07/23 21:12:12 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/25 21:22:34 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	init(t_shell *shell)
 
 	ft_memset(cmds, 0, sizeof(cmds));
 	ft_memset(shell->avline, 0, sizeof(shell->avline));
-	ft_memset(shell->infile, 0, sizeof(shell->infile));
-	ft_memset(shell->outfile, 0, sizeof(shell->outfile));
+	// ft_memset(shell->infile, 0, sizeof(shell->infile));
+	// ft_memset(shell->outfile, 0, sizeof(shell->outfile));
 	shell->avptr = shell->avline;
 	shell->lineptr = shell->cmdline;
 	shell->append = 0;
@@ -78,6 +78,8 @@ void	init(t_shell *shell)
 	{
 		cmds[i].infd = 0;
 		cmds[i].outfd = 1;
+		ft_memset(cmds[i].infile, 0, sizeof(cmds[i].infile));
+		ft_memset(cmds[i].outfile, 0, sizeof(cmds[i].outfile));
 		++i;
 	}
 }

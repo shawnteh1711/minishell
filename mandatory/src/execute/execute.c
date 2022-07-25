@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:57:34 by steh              #+#    #+#             */
-/*   Updated: 2022/07/25 20:51:33 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/25 21:26:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,37 @@ int	exec_disk_cmd(t_shell *shell)
 	
 	if (shell->cmd_count == 0)
 		return (0);
-	if (*shell->infile != '\0')
+	// if (*shell->infile != '\0')
+	// {
+	// 	cmds[0].infd = open(shell->infile, O_RDONLY);
+	// }
+	// if (*shell->outfile != '\0')
+	// {
+	// 	if (shell->append)
+	// 		cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+	// 		| O_CREAT | O_APPEND, 0666);
+	// 	else
+	// 		cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+	// 		| O_CREAT | O_TRUNC, 0666);
+	// }
+	i = 0;
+	if (*cmds[i].infile!= '\0')
 	{
-		cmds[0].infd = open(shell->infile, O_RDONLY);
+		cmds[0].infd = open(cmds[i].infile, O_RDONLY);
 	}
-	if (*shell->outfile != '\0')
+	if (*cmds[i].outfile != '\0')
 	{
 		if (shell->append)
-			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+			cmds[shell->cmd_count - 1].outfd = open(cmds[i].outfile, O_WRONLY
 			| O_CREAT | O_APPEND, 0666);
 		else
-			cmds[shell->cmd_count - 1].outfd = open(shell->outfile, O_WRONLY
+			cmds[shell->cmd_count - 1].outfd = open(cmds[i].outfile, O_WRONLY
 			| O_CREAT | O_TRUNC, 0666);
 	}
 	if (shell->heredoc == 1)
 	{
 		heredoc(shell);
 	}
-	i = 0;
 	while (i < shell->cmd_count)
 	{
 		if (i < shell->cmd_count - 1)
