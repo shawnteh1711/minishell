@@ -44,7 +44,9 @@ LIB_FILES = ft_isalpha.c\
 				ft_lstdelone.c\
 				ft_lstclear.c\
 				ft_lstiter.c\
-				ft_lstmap.c
+				ft_lstmap.c\
+				ft_strcmp.c\
+				ft_strstr.c
 
 OBJ_FILES	=	$(LIB_FILES:%.c=%.o)
 

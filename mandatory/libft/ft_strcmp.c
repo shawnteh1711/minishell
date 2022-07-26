@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/05 23:15:47 by steh              #+#    #+#             */
-/*   Updated: 2022/07/07 20:23:30 by steh             ###   ########.fr       */
+/*   Created: 2022/05/07 21:16:28 by steh              #+#    #+#             */
+/*   Updated: 2022/05/07 21:16:40 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
-#include "lexer.h"
+#include "libft.h"
 
-void	init(t_shell *shell)
+int	ft_strcmp(char *s1, char *s2)
 {
-	ft_memset(shell->line, 0, sizeof(shell->line));
-	shell->avptr = shell->line;
-
+	while (*s1 == *s2 && *s1 != '\0' && *s2 != '\0')
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }

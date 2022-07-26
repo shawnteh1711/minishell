@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/07/26 11:45:42 by steh             ###   ########.fr       */
+/*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
+/*   Updated: 2022/07/26 12:00:21 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "lexer.h"
+#include "builtin.h"
+#include "execute.h"
 
-int	main(int ac, char *av[], char *envp[])
+void	shell_loop(t_shell *shell)
 {
-	t_shell	shell;
+	while (42)
+	{
+		init(shell);
+		if (read_cmd(shell) == -1)
+			break ;
+		parse_cmd(shell);
+		// print_command(shell);
+		// exec_cmd(shell);
+	}
+	do_exit(shell);
+}
 
-	(void)ac;
-	(void)av;
-	shell.envp = envp;
-	// malloc strict shell and command
-	// shell(&shell)
-	setup();
-	shell_loop(&shell);
+int	read_cmd(t_shell *shell)
+{
+	shell->cmdline = readline("minishell> ");
+	if (shell->cmdline == NULL)
+		return (-1);
+	add_history(shell->cmdline);
+	disable_ctrl_d(true);
 	return (0);
 }
