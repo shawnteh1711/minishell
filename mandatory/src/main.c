@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:01:46 by steh              #+#    #+#             */
-/*   Updated: 2022/07/21 01:46:34 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/26 11:45:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int ac, char *av[], char *envp[])
 	(void)ac;
 	(void)av;
 	shell.envp = envp;
+	// malloc strict shell and command
+	// shell(&shell)
 	setup();
 	shell_loop(&shell);
 	return (0);

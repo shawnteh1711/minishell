@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:35:06 by steh              #+#    #+#             */
-/*   Updated: 2022/07/25 21:30:32 by steh             ###   ########.fr       */
+/*   Updated: 2022/07/26 12:00:21 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	shell_loop(t_shell *shell)
 			break ;
 		parse_cmd(shell);
 		// print_command(shell);
-		exec_cmd(shell);
+		// exec_cmd(shell);
 	}
 	do_exit(shell);
 }
 
 int	read_cmd(t_shell *shell)
 {
-	shell->cmdline = readline("test> ");
+	shell->cmdline = readline("minishell> ");
 	if (shell->cmdline == NULL)
 		return (-1);
 	add_history(shell->cmdline);

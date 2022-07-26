@@ -15,29 +15,32 @@
 #define MAXLINE 1024
 #define MAXNAME 100
 
+typedef struct s_command t_command;
 typedef	struct	s_shell
 {
-	char	avline[MAXLINE + 1];
-	char	*cmdline;
-	char	*avptr;
-	char	*lineptr;
-	int		append;
-	int		heredoc;
-	char	infile[MAXNAME];
-	char	outfile[MAXNAME];
-	int		cmd_count;
-	int		lastpid;
-	char	**envp;
-	size_t	env_size;
+	char		avline[MAXLINE + 1];
+	char		*cmdline;
+	char		*avptr;
+	char		*lineptr;
+	int			append;
+	int			heredoc;
+	char		infile[MAXNAME];
+	char		outfile[MAXNAME];
+	int			cmd_count;
+	int			lastpid;
+	char		**envp;
+	t_command	*head;
+	size_t		env_size;
 }	t_shell;
 
 typedef	struct s_command
 {
-	char	*args[MAXARG + 1];
-	int		infd;
-	int		outfd;
-	char	infile[MAXNAME];
-	char	outfile[MAXNAME];
+	char		*args[MAXARG + 1];
+	int			infd;
+	int			outfd;
+	char		infile[MAXNAME];
+	char		outfile[MAXNAME];
+	t_command	*next;
 }	t_command;
 
 
